@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.like.activityresultlauncher.RequestMultiplePermissionsLauncher
 import com.like.activityresultlauncher.RequestPermissionLauncher
 import com.like.activityresultlauncher.StartActivityForResultLauncher
 
@@ -21,7 +22,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val requestMultiplePermissionsLauncher = RequestMultiplePermissionsLauncher(this)
     fun requestMultiplePermissions(view: View) {
+        requestMultiplePermissionsLauncher.launch(
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) {
+            it.forEach {
+                Log.w("TAG", "${it.key} ${it.value}")
+            }
+        }
     }
 
     private val startActivityForResultLauncher1 = StartActivityForResultLauncher(this)

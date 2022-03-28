@@ -1,7 +1,10 @@
 package com.like.activityresultlauncher
 
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 
 /*
 private val requestPermissionLauncher = RequestPermissionLauncher(this)
@@ -40,4 +43,27 @@ requestPermissionLauncher.launch(android.Manifest.permission.CAMERA) {
 class RequestPermissionLauncher(caller: ActivityResultCaller) :
     BaseActivityResultLauncher<String, Boolean>(
         caller, ActivityResultContracts.RequestPermission()
-    )
+    ) {
+    /**
+     * @return first：是否允许权限；second；权限被拒绝时，是否不再提示。
+     */
+    suspend fun requestPermission(input: String, options: ActivityOptionsCompat? = null): Pair<Boolean, Boolean> {
+        return if (super.launch(input, options)) {
+            true to false
+        } else {
+            false to !ActivityCompat.shouldShowRequestPermissionRationale(activity, input)
+        }
+    }
+
+    fun requestPermission(input: String, options: ActivityOptionsCompat? = null, callback: ActivityResultCallback<Pair<Boolean, Boolean>>) {
+        super.launch(input, options) {
+            callback.onActivityResult(
+                if (it) {
+                    true to false
+                } else {
+                    false to !ActivityCompat.shouldShowRequestPermissionRationale(activity, input)
+                }
+            )
+        }
+    }
+}

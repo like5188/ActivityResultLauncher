@@ -42,4 +42,9 @@ open class BaseActivityResultLauncher<I, O>(caller: ActivityResultCaller, contra
         this.callback = callback
         launcher.launch(input, options)
     }
+
+    @MainThread
+    fun unregister() {
+        launcher.unregister()
+    }
 }

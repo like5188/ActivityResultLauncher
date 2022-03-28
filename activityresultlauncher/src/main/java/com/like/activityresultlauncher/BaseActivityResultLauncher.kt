@@ -17,7 +17,7 @@ import kotlin.coroutines.resume
  * 例子：private val xxxLauncher = XxxLauncher(caller)
  */
 
-open class BaseActivityResultLauncher<I, O>(caller: ActivityResultCaller, contract: ActivityResultContract<I, O>) {
+open class BaseActivityResultLauncher<I, O>(val caller: ActivityResultCaller, contract: ActivityResultContract<I, O>) {
     private var continuation: CancellableContinuation<O>? = null
     private var callback: ActivityResultCallback<O>? = null
     private val launcher = caller.registerForActivityResult(contract) {

@@ -26,7 +26,7 @@ import com.like.activityresultlauncher.util.createIntent
  *
  * 综上所述：api >= 30 时，一切正常。
  */
-class StartActivityForResultLauncher(val caller: ActivityResultCaller) :
+class StartActivityForResultLauncher(caller: ActivityResultCaller) :
     BaseActivityResultLauncher<Intent, ActivityResult>(
         caller, ActivityResultContracts.StartActivityForResult()
     ) {

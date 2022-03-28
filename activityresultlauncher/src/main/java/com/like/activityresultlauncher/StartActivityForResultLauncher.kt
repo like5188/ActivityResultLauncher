@@ -30,13 +30,13 @@ class StartActivityForResultLauncher(caller: ActivityResultCaller) :
         caller, ActivityResultContracts.StartActivityForResult()
     ) {
 
-    suspend inline fun <reified T : Activity> startActivityForResult(
+    suspend inline fun <reified T : Activity> launch(
         vararg params: Pair<String, Any?>,
         options: ActivityOptionsCompat? = null
     ): ActivityResult = launch(activity.createIntent<T>(*params), options)
 
     @MainThread
-    inline fun <reified T : Activity> startActivityForResult(
+    inline fun <reified T : Activity> launch(
         vararg params: Pair<String, Any?>,
         options: ActivityOptionsCompat? = null,
         callback: ActivityResultCallback<ActivityResult>

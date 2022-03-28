@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 
 val ActivityResultCaller.activity: Activity
     get() {
@@ -13,6 +14,14 @@ val ActivityResultCaller.activity: Activity
             is ComponentActivity -> this
             is Fragment -> activity ?: throw IllegalStateException("Fragment $this not attached to Activity")
             else -> throw IllegalStateException("$this must be androidx.activity.ComponentActivity or androidx.fragment.app.Fragment")
+        }
+    }
+
+val ActivityResultCaller.lifecycleOwner: LifecycleOwner
+    get() {
+        return when (this) {
+            is LifecycleOwner -> this
+            else -> throw IllegalStateException("$this must be androidx.lifecycle.LifecycleOwner")
         }
     }
 

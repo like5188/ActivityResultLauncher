@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.MainThread
 import androidx.core.app.ActivityOptionsCompat
+import com.like.activityresultlauncher.util.activity
 import com.like.activityresultlauncher.util.createIntent
 
 /**
@@ -25,7 +26,7 @@ import com.like.activityresultlauncher.util.createIntent
  *
  * 综上所述：api >= 30 时，一切正常。
  */
-class StartActivityForResultLauncher(caller: ActivityResultCaller) :
+class StartActivityForResultLauncher(val caller: ActivityResultCaller) :
     BaseActivityResultLauncher<Intent, ActivityResult>(
         caller, ActivityResultContracts.StartActivityForResult()
     ) {
@@ -33,7 +34,7 @@ class StartActivityForResultLauncher(caller: ActivityResultCaller) :
     suspend inline fun <reified T : Activity> launch(
         vararg params: Pair<String, Any?>,
         options: ActivityOptionsCompat? = null
-    ): ActivityResult = launch(activity.createIntent<T>(*params), options)
+    ): ActivityResult = launch(caller.activity.createIntent<T>(*params), options)
 
     @MainThread
     inline fun <reified T : Activity> launch(
@@ -41,7 +42,7 @@ class StartActivityForResultLauncher(caller: ActivityResultCaller) :
         options: ActivityOptionsCompat? = null,
         callback: ActivityResultCallback<ActivityResult>
     ) {
-        launch(activity.createIntent<T>(*params), options, callback)
+        launch(caller.activity.createIntent<T>(*params), options, callback)
     }
 
 }

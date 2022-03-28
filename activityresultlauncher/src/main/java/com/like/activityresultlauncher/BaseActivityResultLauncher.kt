@@ -5,7 +5,6 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.MainThread
 import androidx.core.app.ActivityOptionsCompat
-import com.like.activityresultlauncher.util.activity
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -19,7 +18,6 @@ import kotlin.coroutines.resume
  */
 
 open class BaseActivityResultLauncher<I, O>(caller: ActivityResultCaller, contract: ActivityResultContract<I, O>) {
-    val activity = caller.activity
     private var continuation: CancellableContinuation<O>? = null
     private var callback: ActivityResultCallback<O>? = null
     private val launcher = caller.registerForActivityResult(contract) {

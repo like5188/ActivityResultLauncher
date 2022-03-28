@@ -65,6 +65,5 @@ requestPermissionLauncher.launch(android.Manifest.permission.CAMERA) {
     }
 }
  */
-fun ActivityResultCaller.shouldShowRequestPermissionRationale(permission: String): Boolean {
-    return ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
-}
+fun ActivityResultCaller.shouldShowRequestPermissionRationale(permission: String): Boolean =
+    ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)

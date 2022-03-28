@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.like.activityresultlauncher.StartActivityForResultLauncher
 import com.like.activityresultlauncher.app.databinding.ActivityTest1Binding
+import com.like.activityresultlauncher.util.activity
 
 /**
  * 正常的 Activity
@@ -20,7 +21,7 @@ class TestActivity1 : AppCompatActivity() {
             startActivityForResultLauncher: StartActivityForResultLauncher,
             callback: ActivityResultCallback<ActivityResult>
         ) {
-            val intent = Intent(startActivityForResultLauncher.activity, TestActivity1::class.java)
+            val intent = Intent(startActivityForResultLauncher.caller.activity, TestActivity1::class.java)
             startActivityForResultLauncher.launch(intent, callback = callback)
         }
     }

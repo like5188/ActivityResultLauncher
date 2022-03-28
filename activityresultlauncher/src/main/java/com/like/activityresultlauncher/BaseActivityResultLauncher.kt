@@ -1,10 +1,17 @@
 package com.like.activityresultlauncher
 
+import android.app.Activity
+import android.content.Context
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.MainThread
 import androidx.core.app.ActivityOptionsCompat
+import androidx.lifecycle.LifecycleOwner
+import com.like.activityresultlauncher.util.activity
+import com.like.activityresultlauncher.util.context
+import com.like.activityresultlauncher.util.lifecycleOwner
+import com.like.activityresultlauncher.util.shouldShowRequestPermissionRationale
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -17,7 +24,7 @@ import kotlin.coroutines.resume
  * 例子：private val xxxLauncher = XxxLauncher(caller)
  */
 
-open class BaseActivityResultLauncher<I, O>(val caller: ActivityResultCaller, contract: ActivityResultContract<I, O>) {
+open class BaseActivityResultLauncher<I, O>(private val caller: ActivityResultCaller, contract: ActivityResultContract<I, O>) {
     private var continuation: CancellableContinuation<O>? = null
     private var callback: ActivityResultCallback<O>? = null
     private val launcher = caller.registerForActivityResult(contract) {
@@ -45,4 +52,16 @@ open class BaseActivityResultLauncher<I, O>(val caller: ActivityResultCaller, co
     fun unregister() {
         launcher.unregister()
     }
+
+    val activity: Activity
+        get() = caller.activity
+
+    val lifecycleOwner: LifecycleOwner
+        get() = caller.lifecycleOwner
+
+    val context: Context
+        get() = caller.context
+
+    fun shouldShowRequestPermissionRationale(permission: String): Boolean =
+        caller.shouldShowRequestPermissionRationale(permission)
 }

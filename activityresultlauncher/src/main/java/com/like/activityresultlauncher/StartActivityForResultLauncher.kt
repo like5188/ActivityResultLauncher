@@ -8,7 +8,6 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.MainThread
 import androidx.core.app.ActivityOptionsCompat
-import com.like.activityresultlauncher.util.activity
 import com.like.activityresultlauncher.util.createIntent
 
 /**
@@ -34,7 +33,7 @@ class StartActivityForResultLauncher(caller: ActivityResultCaller) :
     suspend inline fun <reified T : Activity> launch(
         vararg params: Pair<String, Any?>,
         options: ActivityOptionsCompat? = null
-    ): ActivityResult = launch(caller.activity.createIntent<T>(*params), options)
+    ): ActivityResult = launch(activity.createIntent<T>(*params), options)
 
     @MainThread
     inline fun <reified T : Activity> launch(
@@ -42,7 +41,7 @@ class StartActivityForResultLauncher(caller: ActivityResultCaller) :
         options: ActivityOptionsCompat? = null,
         callback: ActivityResultCallback<ActivityResult>
     ) {
-        launch(caller.activity.createIntent<T>(*params), options, callback)
+        launch(activity.createIntent<T>(*params), options, callback)
     }
 
 }

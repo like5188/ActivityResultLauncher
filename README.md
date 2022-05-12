@@ -27,9 +27,6 @@
 
 ```groovy
     dependencies {
-    implementation 'androidx.activity:activity-ktx:1.4.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'com.github.like5188:ActivityResultLauncher:版本号'
 }
 ```

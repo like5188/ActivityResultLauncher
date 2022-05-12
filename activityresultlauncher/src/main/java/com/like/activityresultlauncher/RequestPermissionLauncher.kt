@@ -1,9 +1,24 @@
 package com.like.activityresultlauncher
 
-import androidx.activity.result.ActivityResultCaller
+import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityOptionsCompat
 
-class RequestPermissionLauncher(caller: ActivityResultCaller) :
+class RequestPermissionLauncher(registry: ActivityResultRegistry) :
     BaseActivityResultLauncher<String, Boolean>(
-        caller, ActivityResultContracts.RequestPermission()
+        registry, ActivityResultContracts.RequestPermission()
     )
+
+suspend fun ComponentActivity.requestPermission(permission: String, options: ActivityOptionsCompat? = null): Boolean {
+    return RequestPermissionLauncher(activityResultRegistry).launch(permission, options)
+}
+
+fun ComponentActivity.requestPermission(
+    permission: String,
+    options: ActivityOptionsCompat? = null,
+    callback: ActivityResultCallback<Boolean>
+) {
+    RequestPermissionLauncher(activityResultRegistry).launch(permission, options, callback)
+}

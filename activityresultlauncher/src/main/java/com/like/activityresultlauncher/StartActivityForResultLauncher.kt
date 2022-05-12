@@ -2,11 +2,11 @@ package com.like.activityresultlauncher
 
 import android.app.Activity
 import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.MainThread
 import androidx.core.app.ActivityOptionsCompat
 import com.like.activityresultlauncher.util.createIntent
 
@@ -25,23 +25,22 @@ import com.like.activityresultlauncher.util.createIntent
  *
  * 综上所述：api >= 30 时，一切正常。
  */
-class StartActivityForResultLauncher(caller: ActivityResultCaller) :
+class StartActivityForResultLauncher(registry: ActivityResultRegistry) :
     BaseActivityResultLauncher<Intent, ActivityResult>(
-        caller, ActivityResultContracts.StartActivityForResult()
-    ) {
+        registry, ActivityResultContracts.StartActivityForResult()
+    )
 
-    suspend inline fun <reified T : Activity> launch(
-        vararg params: Pair<String, Any?>,
-        options: ActivityOptionsCompat? = null
-    ): ActivityResult = launch(activity.createIntent<T>(*params), options)
+suspend inline fun <reified T : Activity> ComponentActivity.startActivityForResult(
+    vararg params: Pair<String, Any?>,
+    options: ActivityOptionsCompat? = null
+): ActivityResult {
+    return StartActivityForResultLauncher(activityResultRegistry).launch(createIntent<T>(*params), options)
+}
 
-    @MainThread
-    inline fun <reified T : Activity> launch(
-        vararg params: Pair<String, Any?>,
-        options: ActivityOptionsCompat? = null,
-        callback: ActivityResultCallback<ActivityResult>
-    ) {
-        launch(activity.createIntent<T>(*params), options, callback)
-    }
-
+inline fun <reified T : Activity> ComponentActivity.startActivityForResult(
+    vararg params: Pair<String, Any?>,
+    options: ActivityOptionsCompat? = null,
+    callback: ActivityResultCallback<ActivityResult>
+) {
+    StartActivityForResultLauncher(activityResultRegistry).launch(createIntent<T>(*params), options, callback)
 }

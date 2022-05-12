@@ -9,8 +9,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="requestPermission"
+            android:onClick="requestPermission1"
             android:text="获取单个权限"
+            android:textAllCaps="false" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="requestPermission2"
+            android:text="获取单个权限(suspend)"
             android:textAllCaps="false" />
 
         <Button
@@ -23,8 +30,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="startActivityForResult"
+            android:onClick="startActivityForResult1"
             android:text="获取返回值"
+            android:textAllCaps="false" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="startActivityForResult2"
+            android:text="获取返回值(suspend)"
             android:textAllCaps="false" />
 
         <Button

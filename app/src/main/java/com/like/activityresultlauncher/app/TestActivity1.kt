@@ -4,13 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.like.activityresultlauncher.StartActivityForResultLauncher
 import com.like.activityresultlauncher.app.databinding.ActivityTest1Binding
-import com.like.activityresultlauncher.util.activity
+import com.like.activityresultlauncher.startActivityForResult
 
 /**
  * 正常的 Activity
@@ -18,11 +18,14 @@ import com.like.activityresultlauncher.util.activity
 class TestActivity1 : AppCompatActivity() {
     companion object {
         fun start(
-            startActivityForResultLauncher: StartActivityForResultLauncher,
+            activity: ComponentActivity,
             callback: ActivityResultCallback<ActivityResult>
         ) {
-            val intent = Intent(startActivityForResultLauncher.caller.activity, TestActivity1::class.java)
-            startActivityForResultLauncher.launch(intent, callback = callback)
+            activity.startActivityForResult<TestActivity1>(callback = callback)
+        }
+
+        suspend fun start(activity: ComponentActivity): ActivityResult {
+            return activity.startActivityForResult<TestActivity1>()
         }
     }
 
